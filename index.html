@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=yes">
+<title>四级冲刺</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;background:#0a0a0a;color:#ccc;min-height:100vh;padding:14px;max-width:640px;margin:0 auto;line-height:1.6}
+h2{font-size:15px;color:#ffd200;margin:24px 0 10px;border-left:3px solid #ffd200;padding-left:10px}
+.countdown{background:linear-gradient(135deg,#0f1923,#112240);border-radius:18px;padding:24px 20px;text-align:center;margin-bottom:18px;border:1px solid #1e3050}
+.countdown .days{font-size:52px;font-weight:900;color:#f7971e;line-height:1.1}
+.countdown .sub{color:#777;font-size:13px;margin:6px 0}
+.countdown .bar-wrap{background:#1a2a3a;border-radius:8px;height:6px;margin-top:10px;overflow:hidden}
+.countdown .bar{background:#f7971e;height:100%;border-radius:8px}
+table{width:100%;border-collapse:collapse;font-size:11px;margin:10px 0}
+th,td{border:1px solid #222;padding:7px 3px;text-align:center}
+th{background:#111;color:#ffd200;font-weight:600;font-size:10px}
+.free{background:#0a1a0a;color:#4ade80}
+.busy{background:#111;color:#aaa;font-size:10px}
+.eng{background:#1a100a;color:#f59e0b;font-size:10px}
+.exam{background:#1a0505;color:#ef4444;font-weight:700}
+.danger{color:#ef4444;font-weight:600}
+.block{background:#111;border:1px solid #222;border-radius:10px;padding:14px;margin-bottom:10px;font-size:13px}
+pre{white-space:pre-wrap;font-family:inherit;font-size:12px;color:#aaa;line-height:1.7;margin:0}
+.hl{color:#ffd200;font-weight:600}
+.card{background:#111;border:1px solid #222;border-radius:12px;padding:16px 18px;margin-bottom:10px}
+.card.alert{background:linear-gradient(135deg,#1a1020,#200c2e);border-color:#9333ea}
+.card .h{font-size:15px;font-weight:700;color:#fff;margin-bottom:4px}
+.card .d{font-size:12px;color:#888}
+.timeline{margin:8px 0}
+.timeline .item{display:flex;align-items:flex-start;padding:5px 0;border-bottom:1px solid #1a1a1a;font-size:13px}
+.timeline .time{color:#f7971e;min-width:72px;font-weight:600;font-size:12px;flex-shrink:0}
+.timeline .task{color:#ccc;flex:1}
+.timeline .emoji{width:28px;flex-shrink:0;text-align:center}
+.footer{text-align:center;padding:28px 0;color:#333;font-size:11px}
+.badge{display:inline-block;padding:2px 8px;border-radius:8px;font-size:10px;margin:2px 3px}
+.bg-y{background:#3b2a0a;color:#fde68a}
+.bg-r{background:#3b0a0a;color:#fca5a5}
+
+/* 原生折叠 - 零JS依赖 */
+details{margin:6px 0}
+summary{
+  background:#1a1a1a;border:1px solid #333;color:#ccc;
+  padding:10px 16px;border-radius:8px;font-size:13px;
+  cursor:pointer;list-style:none;user-select:none;
+}
+summary::-webkit-details-marker{display:none}
+summary::after{content:' ▸';float:right;transition:transform 0.2s}
+details[open] summary::after{content:' ▾'}
+details .body{
+  background:#0f0f0f;border:1px solid #222;
+  border-top:none;border-radius:0 0 10px 10px;
+  padding:14px;font-size:13px;line-height:1.8;color:#aaa;
+}
+</style>
+</head>
+<body>
+
+<div style="text-align:center;padding:20px 0 10px">
+  <h1 style="font-size:22px;color:#fff">🏆 四级冲刺仪表盘</h1>
+  <div style="color:#666;font-size:12px;margin-top:4px">严博威 · 目标425分 · 6月13日</div>
+</div>
+
+<!-- ===== 倒计时 ===== -->
+<div class="countdown">
+  <div class="days" id="cd">--</div>
+  <div class="sub" id="cdSub"></div>
+  <div class="bar-wrap"><div class="bar" id="bar" style="width:0%"></div></div>
+  <div class="sub" style="margin-top:6px" id="barTxt"></div>
+</div>
+
+<!-- ===== 今日任务 ===== -->
+<h2>📅 今天 Day 1（6月6日 周六）</h2>
+<div class="card alert">
+  <div class="h">🔬 核心：诊断模拟考</div>
+  <div class="d">完整1套真题 · 严格计时 · 暴露速度短板</div>
+</div>
+
+<div class="timeline">
+  <div class="item"><span class="emoji">🧪</span><span class="time">09:00-11:05</span><span class="task"><b>第1次模拟考</b> — 写作→听力→阅读→翻译，记录用时</span></div>
+  <div class="item"><span class="emoji">📊</span><span class="time">11:05-11:30</span><span class="task"><b>用时统计</b></span></div>
+  <div class="item"><span class="emoji">🍜</span><span class="time">11:30-13:30</span><span class="task">午饭休息</span></div>
+  <div class="item"><span class="emoji">😴</span><span class="time">13:30-15:00</span><span class="task">午休</span></div>
+  <div class="item"><span class="emoji">🔍</span><span class="time">15:00-16:00</span><span class="task"><b>精对答案</b> — 超时模块时间花哪了</span></div>
+  <div class="item"><span class="emoji">✍️</span><span class="time">16:00-17:00</span><span class="task"><b>模板1</b> — 观点对比型 · 默写3遍</span></div>
+  <div class="item"><span class="emoji">📝</span><span class="time">17:00-17:30</span><span class="task">单词100词</span></div>
+  <div class="item"><span class="emoji">🎧</span><span class="time">19:00-19:30</span><span class="task">精听最难新闻</span></div>
+  <div class="item"><span class="emoji">🔧</span><span class="time">19:30-20:30</span><span class="task"><b>速度复盘</b></span></div>
+  <div class="item"><span class="emoji">📱</span><span class="time">20:30-21:00</span><span class="task">默写模板+30词</span></div>
+</div>
+
+<!-- ===== 每日速览 ===== -->
+<h2>📅 每日速览</h2>
+
+<details><summary>Day 2 · 6月7日（周日）— 第2次模拟考 + 模板2+3</summary><div class="body">
+  <b>09:00</b> 第2次模拟考（压缩阅读10%时间）<br>
+  <b>15:00</b> 模板2+3各默3遍<br>
+  <b>17:00</b> 翻译2道<br>
+  <b>19:00</b> 影子跟读<br>
+  <b>20:40</b> 3套模板连贯默写
+</div></details>
+
+<details><summary>Day 3 · 6月8日（周一）— 阅读限时提速</summary><div class="body">
+  📚 1-2现代汉语 / 7-8大学英语<br>
+  <b>10:20</b> 听力1套练速度<br>
+  <b>15:00</b> 2篇仔细阅读限时16min<br>
+  <b>19:00</b> 翻译+匹配题
+</div></details>
+
+<details><summary>Day 4 · 6月9日（周二）— 第3次模拟考</summary><div class="body">
+  📚 1-2近现代史 / 3-4教师口语<br>
+  <b>13:30</b> ⚠️下午做！目标阅读35min翻译25min
+</div></details>
+
+<details><summary>Day 5 · 6月10日（周三）— 第4次模拟考（三笔字停课！）</summary><div class="body">
+  📚 3-4大学体育<br>
+  <b>08:30</b> 🎁黄金时间！第4次模拟考
+</div></details>
+
+<details><summary>Day 6 · 6月11日（周四）— 第5次模拟考 · 最后一次</summary><div class="body">
+  📚 3-4教育心理学<br>
+  <b>08:30</b> 🔥终极模拟！不许超时
+</div></details>
+
+<details><summary>Day 7 · 6月12日（周五）— 保温日 · 不刷题！</summary><div class="body">
+  📚 1-2古代文学 / 5-6大学英语 / 7-8形势政策<br>
+  <b>10:20</b> 模板默写+只看旧作文<br>
+  <b>21:00</b> <span class="danger">早睡！</span>
+</div></details>
+
+<!-- ===== 课表 ===== -->
+<h2>📅 第14周课表（6.8-6.13）</h2>
+<table>
+<tr><th></th><th>一 6.8</th><th>二 6.9</th><th>三 6.10</th><th>四 6.11</th><th>五 6.12</th><th>六 6.13</th></tr>
+<tr><td>1-2</td><td class="busy">现代汉语</td><td class="busy">近现代史</td><td class="free">📛停课</td><td class="free">🟢</td><td class="busy">古代文学</td><td class="exam" rowspan="4">🏆<br>四级<br>9:00</td></tr>
+<tr><td>3-4</td><td class="free">🟢</td><td class="busy">教师口语</td><td class="busy">大学体育</td><td class="busy">教育心理</td><td class="free">🟢</td></tr>
+<tr><td>5-6</td><td class="free">🟢</td><td class="free">🟢</td><td class="free">🟢</td><td class="free">🟢</td><td class="eng">🏴大学英语</td></tr>
+<tr><td>7-8</td><td class="eng">🏴大学英语</td><td class="free">🟢</td><td class="free">🟢</td><td class="free">🟢</td><td class="busy">形势政策</td></tr>
+</table>
+
+<!-- ===== 作文模板 ===== -->
+<h2>✍️ 作文模板</h2>
+
+<details><summary>模板一 · 观点对比型（最常考！）</summary><div class="body"><pre>
+<span class="hl">[第一段]</span>
+Recently, the issue of ____ has aroused wide concern.
+Some people hold the view that ____, while others argue that ____.
+Personally, I tend to support the former/latter.
+
+<span class="hl">[第二段]</span>
+There are several reasons accounting for my choice.
+To begin with, ____. For example, ____.
+Furthermore, ____. It is widely acknowledged that ____.
+
+<span class="hl">[第三段]</span>
+Admittedly, ____. However, this does not mean that ____.
+In conclusion, I firmly believe that ____.
+Only in this way can we ____.
+</pre></div></details>
+
+<details><summary>模板二 · 现象分析型</summary><div class="body"><pre>
+<span class="hl">[第一段]</span>
+In recent years, ____ has become increasingly prevalent.
+This phenomenon has drawn public attention.
+
+<span class="hl">[第二段]</span>
+Several factors contribute to this trend.
+First of all, with the rapid development of ____, ____.
+Moreover, ____ also plays a significant role.
+
+<span class="hl">[第三段]</span>
+From my perspective, ____ is a double-edged sword.
+Therefore, it is high time that we took effective measures.
+</pre></div></details>
+
+<details><summary>模板三 · 应用文/书信</summary><div class="body"><pre>
+Dear ____,
+
+I am writing this letter to ____.
+
+____ (具体内容，3-4句)
+
+Thank you for your time and consideration.
+I am looking forward to your early reply.
+
+Yours sincerely,
+Li Hua
+</pre></div></details>
+
+<details><summary>刘晓燕极简版（词汇量不够用这个）</summary><div class="body"><pre>
+<span class="hl">[第一段 2句]</span>
+Nowadays, ____ has become a hot topic.
+Different people have different opinions on this issue.
+
+<span class="hl">[第二段 3-4句]</span>
+Some people think that ____. They believe that ____.
+However, others hold the opposite view.
+As for me, I agree with the former/latter.
+
+<span class="hl">[第三段 2句]</span>
+In conclusion, ____.
+Only in this way can we ____.
+</pre></div></details>
+
+<details><summary>🎯 万能金句</summary><div class="body">
+  <b>开头：</b>With the rapid development of society... / Nowadays, there is a growing awareness that...<br>
+  <b>中间：</b>It goes without saying that... / There is no doubt that... / Every coin has two sides.<br>
+  <b>结尾：</b>Only by doing so can we... / It is high time that we took effective measures.
+</div></details>
+
+<details><summary>🔤 王江涛词汇升级表</summary><div class="body">
+  but → <b>however / nevertheless</b><br>
+  so → <b>therefore / consequently</b><br>
+  and → <b>moreover / furthermore</b><br>
+  I think → <b>from my perspective</b><br>
+  many → <b>numerous / a great number of</b><br>
+  important → <b>significant / essential</b><br>
+  good → <b>beneficial / favorable</b><br>
+  bad → <b>harmful / detrimental</b><br>
+  very → <b>extremely / remarkably</b>
+</div></details>
+
+<!-- ===== 翻译 ===== -->
+<h2>🌐 翻译</h2>
+
+<div class="block" style="font-size:12px">
+  <div><span class="badge bg-y">1</span> <b>是…的</b> → It is... that...</div>
+  <div><span class="badge bg-y">2</span> <b>越来越…</b> → more and more / increasingly</div>
+  <div><span class="badge bg-y">3</span> <b>不仅…而且…</b> → not only... but also...</div>
+  <div><span class="badge bg-y">4</span> <b>据说/据报道</b> → It is said/reported that...</div>
+  <div><span class="badge bg-y">5</span> <b>被用来…</b> → ... is used to...</div>
+  <div><span class="badge bg-y">6</span> <b>作为…</b> → As..., ...</div>
+  <div><span class="badge bg-y">7</span> <b>…的特点是…</b> → ... is characterized by...</div>
+  <div><span class="badge bg-y">8</span> <b>…起源于…</b> → ... originated from / dates back to</div>
+  <div><span class="badge bg-y">9</span> <b>被看作是…</b> → ... is regarded/viewed as...</div>
+  <div><span class="badge bg-y">10</span> <b>扮演重要角色</b> → plays an important role in...</div>
+</div>
+
+<details><summary>🆘 不会的词怎么办？3招</summary><div class="body">
+  <b>1. 上位词代替：</b>包子→food，沙发→furniture<br>
+  <b>2. 解释性表达：</b>针灸→a medical treatment using needles<br>
+  <b>3. 大胆跳过：</b>不影响主干就跳过去！
+</div></details>
+
+<details><summary>📝 翻译高频词汇</summary><div class="body">
+  <b>文化：</b>春节 Spring Festival · 饺子 dumpling · 筷子 chopsticks · 长城 Great Wall · 故宫 Forbidden City · 丝绸之路 Silk Road · 四大发明 Four Great Inventions<br><br>
+  <b>社会：</b>经济发展 economic development · 互联网 Internet · 移动支付 mobile payment · 高铁 high-speed railway · 环境保护 environmental protection
+</div></details>
+
+<!-- ===== 名师技巧补充 ===== -->
+<h2>🔬 名师验证技巧</h2>
+
+<details><summary>🎧 听力：新闻前3句 + 预读清单</summary><div class="body">
+  <b>新闻前3句原则：</b>90%答案在前3句！<br><br>
+  <b>播音前30秒预读：</b>①横读扫话题 ②竖读找差异 ③圈人名/数字/否定 ④预判问题<br><br>
+  <b>陷阱词：</b>but/however→后面是重点 · actually→这才是真话 · I'm afraid→委婉拒绝
+</div></details>
+
+<details><summary>📖 阅读：题文同序 + 2+1 + 词性排除</summary><div class="body">
+  <b>仔细阅读：</b>题目顺序 = 文章段落顺序<br>
+  <b>匹配题2+1：</b>一段最多匹配2题<br>
+  <b>选词填空：</b>①标15词词性 ②看空格语法 ③缩到2-3词再选
+</div></details>
+
+<details><summary>🆘 蒙题统计规律</summary><div class="body">
+  ① 仔细阅读：同义改写=答案，照抄原文=干扰项<br>
+  ② 听力ABCD均匀分布（约6-7题每个）<br>
+  ③ 选词填空全蒙同一词性至少对2-3题<br>
+  ④ 选项有must/never/all/none往往是错的
+</div></details>
+
+<!-- ===== 考试时间表 ===== -->
+<h2>⏱️ 考试当天时间控制</h2>
+<table>
+<tr><th>时间</th><th>模块</th><th>死线</th></tr>
+<tr><td>09:00</td><td>✍️ 写作开始</td><td>—</td></tr>
+<tr><td>09:25</td><td>写作收尾</td><td class="danger">09:28!</td></tr>
+<tr><td>09:30</td><td>🎧 听力开始</td><td>—</td></tr>
+<tr><td>09:55</td><td>听力结束 立刻涂卡</td><td class="danger">⚠️</td></tr>
+<tr><td>09:55</td><td>📖 跳阅读C</td><td>—</td></tr>
+<tr><td>10:15</td><td>阅读C必须做完</td><td class="danger">10:15!</td></tr>
+<tr><td>10:15</td><td>📖 阅读B匹配</td><td>—</td></tr>
+<tr><td>10:27</td><td>阅读B必须做完</td><td class="danger">10:27!</td></tr>
+<tr><td>10:27</td><td>🌐 翻译</td><td>—</td></tr>
+<tr><td>10:55</td><td>翻译收尾</td><td class="danger">10:55!</td></tr>
+<tr><td>10:55</td><td>📖 选词填空</td><td>有时间就做</td></tr>
+<tr><td>11:05</td><td>🎉 交卷！</td><td>—</td></tr>
+</table>
+
+<!-- ===== 物品清单 ===== -->
+<h2>🎒 考场物品</h2>
+<div class="block" style="font-size:13px">
+  <label style="display:block;margin:4px 0"><input type="checkbox"> 📄 准考证（×2）</label>
+  <label style="display:block;margin:4px 0"><input type="checkbox"> 🪪 身份证</label>
+  <label style="display:block;margin:4px 0"><input type="checkbox"> ✏️ 2B铅笔×2+橡皮</label>
+  <label style="display:block;margin:4px 0"><input type="checkbox"> 🖊️ 黑色签字笔×2</label>
+  <label style="display:block;margin:4px 0"><input type="checkbox"> 🎧 耳机+<b class="danger">备用电池</b></label>
+  <label style="display:block;margin:4px 0"><input type="checkbox"> ⌚ 机械手表</label>
+  <label style="display:block;margin:4px 0"><input type="checkbox"> 💧 水（去标签）</label>
+  <label style="display:block;margin:4px 0"><input type="checkbox"> 🧻 纸巾</label>
+</div>
+
+<!-- ===== 资源链接 ===== -->
+<h2>🔗 资源链接</h2>
+<div class="block" style="font-size:12px">
+  <div style="margin-bottom:4px">📦 词汇库: github.com/KyleBing/english-vocabulary</div>
+  <div style="margin-bottom:4px">📝 AI写作Prompt: github.com/ZhaoyuanLiu23/CET-Prompt-Hub</div>
+  <div style="margin-bottom:4px">🖨️ 答题卡: github.com/bitliyaowei/Answer-Sheet-of-Chinese-CET-4-and-6</div>
+  <div style="margin-bottom:4px">🌐 CET官网: cet.neea.edu.cn</div>
+</div>
+
+<div class="footer">💪 5次模拟考之后 你会脱胎换骨</div>
+
+<!-- 唯一JS：倒计时（必须实时更新） -->
+<script>
+(function(){
+  var exam=new Date(2026,5,13,9,0,0), start=new Date(2026,5,6,0,0,0);
+  function tick(){
+    var n=new Date(), d=exam-n;
+    if(d<=0){document.getElementById('cd').textContent='🎯今天考试！';return}
+    var days=Math.floor(d/864e5), hrs=Math.floor((d%864e5)/36e5), mins=Math.floor((d%36e5)/6e4);
+    document.getElementById('cd').textContent=days+'天 '+hrs+'时 '+mins+'分';
+    document.getElementById('cdSub').textContent='现在 '+n.toTimeString().slice(0,5)+' · 6月13日 9:00';
+    var p=Math.min(100,Math.max(0,((n-start)/(exam-start))*100));
+    document.getElementById('bar').style.width=p+'%';
+    document.getElementById('barTxt').textContent='已过去 '+Math.floor(p)+'% · 剩余 '+(days+1)+' 天';
+  }
+  tick();setInterval(tick,6e4);
+})();
+</script>
+</body>
+</html>
